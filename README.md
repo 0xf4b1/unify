@@ -60,11 +60,11 @@ The script in its current state is very basic and does not cover all cases.
 | Night In The Woods                | cd1b8a6e5b6c47369e2a1e2cf7b7f536 | 5.6.2p4       | yes             | yes            | no       | can not find matching unity engine            |
 | Stories Untold                    | Parsley                          | 5.6.3p2       | no              | yes            | no       | can not find matching unity engine            |
 | Inside                            | Marigold                         | 5.6.6f2       | no              | yes            | no       | can not find matching unity engine            |
-| The First Tree                    | cd98b47155654e1f9a9e84e60d0b49e4 | 2017.4.11f1   | yes             | yes            | no       | starting without input, needs rewired         |
+| The First Tree                    | cd98b47155654e1f9a9e84e60d0b49e4 | 2017.4.11f1   | yes             | yes            | yes      | rewired: Rewired_OSX_Lib.dll must be removed  |
 | Absolute Drift                    | 19927295d6e3467887d4e830d8c85963 | 2017.4.16f1   | yes             | yes            | no       | needs EOSSDK-Mac-Shipping                     |
 | Enter the Gungeon                 | Garlic                           | 2017.4.27f1   | yes             | yes            | no       | needs AkSoundEngine                           |
 | Hand of Fate 2                    | 808f0dfbf3b84c2680793724d7f207bf | 2017.4.40f1   | yes             | yes            | no       | needs InControlNative                         |
-| Tacoma                            | Flagfin                          | 2018.4.9f1    | yes             | yes            | no       | starting without input, needs rewired         |
+| Tacoma                            | Flagfin                          | 2018.4.9f1    | yes             | yes            | yes      | rewired: Rewired_OSX_Lib.dll must be removed  |
 | Rise of Industry                  | cf6c487e39a14113b75d1f625fed1da7 | 2018.4.11f1   | yes             | yes            | no       | needs EOSSDK-Mac-Shipping                     |
 | Totally Reliable Delivery Service | Hoatzin                          | 2018.4.14f1   | yes             | yes            | no       | starting without input, needs rewired         |
 | Faeria                            | Vulture                          | 2018.4.18f1   | yes             | yes            | no       | needs libepic_api.so                          |
