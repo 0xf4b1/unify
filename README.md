@@ -61,19 +61,19 @@ The script in its current state is very basic and does not cover all cases.
 | Stories Untold                    | Parsley                          | 5.6.3p2       | no              | yes            | no       | can not find matching unity engine            |
 | Inside                            | Marigold                         | 5.6.6f2       | no              | yes            | no       | can not find matching unity engine            |
 | The First Tree                    | cd98b47155654e1f9a9e84e60d0b49e4 | 2017.4.11f1   | yes             | yes            | yes      | rewired: Rewired_OSX_Lib.dll must be removed  |
-| Absolute Drift                    | 19927295d6e3467887d4e830d8c85963 | 2017.4.16f1   | yes             | yes            | no       | needs EOSSDK-Mac-Shipping                     |
+| Absolute Drift                    | 19927295d6e3467887d4e830d8c85963 | 2017.4.16f1   | yes             | yes            | no       | needs EOSSDK-Mac-Shipping[^1]; starting without input, needs rewired |
 | Enter the Gungeon                 | Garlic                           | 2017.4.27f1   | yes             | yes            | no       | needs AkSoundEngine                           |
 | Hand of Fate 2                    | 808f0dfbf3b84c2680793724d7f207bf | 2017.4.40f1   | yes             | yes            | no       | needs InControlNative                         |
 | Tacoma                            | Flagfin                          | 2018.4.9f1    | yes             | yes            | yes      | rewired: Rewired_OSX_Lib.dll must be removed  |
-| Rise of Industry                  | cf6c487e39a14113b75d1f625fed1da7 | 2018.4.11f1   | yes             | yes            | no       | needs EOSSDK-Mac-Shipping                     |
+| Rise of Industry                  | cf6c487e39a14113b75d1f625fed1da7 | 2018.4.11f1   | yes             | yes            | yes      | needs EOSSDK-Mac-Shipping[^1]                 |
 | Totally Reliable Delivery Service | Hoatzin                          | 2018.4.14f1   | yes             | yes            | no       | starting without input, needs rewired         |
 | Faeria                            | Vulture                          | 2018.4.18f1   | yes             | yes            | no       | needs libepic_api.so                          |
-| Iratus                            | 82ab0adb6e0b41bea531fcbb0c43cfc7 | 2018.4.26f1   | yes             | yes            | yes      | needs EOSSDK-Mac-Shipping                     |
-| Crying Suns                       | 18fafa2d70d64831ab500a9d65ba9ab8 | 2018.4.30f1   | no              | yes            | no       | needs AkSoundEngine                           |
+| Iratus                            | 82ab0adb6e0b41bea531fcbb0c43cfc7 | 2018.4.26f1   | yes             | yes            | yes      | needs EOSSDK-Mac-Shipping[^1]                 |
+| Crying Suns                       | 18fafa2d70d64831ab500a9d65ba9ab8 | 2018.4.30f1   | no              | yes            | yes      | needs AkSoundEngine                           |
 | Moonlighter                       | Eagle                            | 2019.2.20f1   | yes             | yes            | no       | needs InControlNative                         |
 | Kerbal Space Program              | a1e2ce30defe4a9187ebc14fc9d2bd8b | 2019.4.18f1   | yes             | yes            | yes      | mv GameData KSP.app/Contents/Resources/       |
-| Verdun                            | 38c0129b680e4843b4807b98bad67027 | 2019.4.29f1   | yes             | yes            | no       |                                               |
-| Tannenberg                        | ecfdc10170eb49b6b61cf16b3aa36d56 | 2019.4.29f1   | yes             | yes            | no       |                                               |
+| Verdun                            | 38c0129b680e4843b4807b98bad67027 | 2019.4.29f1   | yes             | yes            | no       | needs EOSSDK-Mac-Shipping[^1]; needs to be started with `./LinuxPlayer -epicusername=<something> -epicuserid=<something> -AUTH_PASSWORD=<something>`; starting without input, needs rewired |
+| Tannenberg                        | ecfdc10170eb49b6b61cf16b3aa36d56 | 2019.4.29f1   | yes             | yes            | no       | needs EOSSDK-Mac-Shipping[^1]; needs to be started with `./LinuxPlayer -epicusername=<something> -epicuserid=<something> -AUTH_PASSWORD=<something>`; starting without input, needs rewired |
 | The Fall                          | daac7fe46e3647cb80530411d7ec1dc5 | 2020.2.2f1    | yes             | yes            | yes      |                                               |
 | Magic The Gathering Arena         | stargazer                        | 2020.3.13f1   | no              | yes            | no       |                                               |
 | Terraforming Mars                 | 582c8940f499450d9033840efe5937a6 | 2021.3.12f1   | no              | no             | no       |                                               |
@@ -102,7 +102,7 @@ The script in its current state is very basic and does not cover all cases.
 | Moving Out                        | 8e29583ae4b44a21883038668f7e301e | 2018.4.21f1   | no              | no             | no       |                                               |
 | Horizon Chase Turbo               | bb406082b69a47208489d3616b22b5c2 | 2018.4.27f1   | yes             | no             | no       |                                               |
 | Overcooked! 2                     | Potoo                            | 2018.4.32f1   | yes             | no             | no       |                                               |
-| Offworld Trading Company          | Snapper                          | 2018.4.36f1   | no              | yes            | no       | needs libEOSSDK-Win32-Shipping.dll            |
+| Offworld Trading Company          | Snapper                          | 2018.4.36f1   | no              | yes            | yes      | needs libEOSSDK-Win32-Shipping.dll[^1]; needs to be started with `./Offworld -AUTH_LOGIN=<something> -AUTH_PASSWORD=<something>` |
 | Idle Champions                    | 40cb42e38c0b4a14a1bb133eb3291572 | 2019.3.0f6    | no              | no             | no       |                                               |
 | Tunche                            | fd51551d919847beb178985f6daf0306 | 2019.4.0f1    | no              | no             | no       |                                               |
 | Pine                              | 6d564ff21f9c45b7b782b7113ad60be8 | 2019.4.10f1   | yes             | no             | no       |                                               |
@@ -117,3 +117,5 @@ The script in its current state is very basic and does not cover all cases.
 | Shop Titans                       | 329064225aaf4df29c4658f141173905 | 2021.3.10f1   | no              | no             | no       |                                               |
 | Bloons TD 6                       | 7786b355a13b47a6b3915335117cd0b2 | 2021.3.16f1   | no              | no             | no       |                                               |
 | Against All Odds                  | ad8aff099d2a445599f9797a24e9ff93 | 2021.3.19f1   | no              | no             | no       |                                               |
+
+[^1]: The file `libEOSSDK-Linux-Shipping.so` can be taken from the EOS-SDK and renamed to replace the missing library.
