@@ -71,7 +71,7 @@ The script in its current state is very basic and does not cover all cases.
 | Iratus                            | 82ab0adb6e0b41bea531fcbb0c43cfc7 | 2018.4.26f1   | yes             | yes            | no       | needs EOSSDK-Mac-Shipping                     |
 | Crying Suns                       | 18fafa2d70d64831ab500a9d65ba9ab8 | 2018.4.30f1   | no              | yes            | no       | needs AkSoundEngine                           |
 | Moonlighter                       | Eagle                            | 2019.2.20f1   | yes             | yes            | no       | needs InControlNative                         |
-| Kerbal Space Program              | a1e2ce30defe4a9187ebc14fc9d2bd8b | 2019.4.18f1   | yes             | yes            | no       |                                               |
+| Kerbal Space Program              | a1e2ce30defe4a9187ebc14fc9d2bd8b | 2019.4.18f1   | yes             | yes            | yes      | mv GameData KSP.app/Contents/Resources/       |
 | Verdun                            | 38c0129b680e4843b4807b98bad67027 | 2019.4.29f1   | yes             | yes            | no       |                                               |
 | Tannenberg                        | ecfdc10170eb49b6b61cf16b3aa36d56 | 2019.4.29f1   | yes             | yes            | no       |                                               |
 | The Fall                          | daac7fe46e3647cb80530411d7ec1dc5 | 2020.2.2f1    | yes             | yes            | no       |                                               |
