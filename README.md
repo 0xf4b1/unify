@@ -12,11 +12,15 @@ Many Unity titles are officially available for Linux, but there are also some ca
 I have tested all the Unity games from Epic Games that I collected for free.
 Since Epic Games does not support Linux game versions, you can also benefit from this method to play your Unity games that you may have collected on that platform.
 
-You can download games with [Legendary](https://github.com/derrod/legendary), the free and open-source Epic Games Launcher alternative.
-
 Take the compatibility status list as reference if you are only interested in games that are known to be playable.
 
-## Install Unity Games from Epic Games
+## Install Unity Games
+
+To determine which games are based on Unity, you can check out [steamdb](https://steamdb.info/tech/Engine/Unity/).
+
+### Epic Games
+
+You can download games with [Legendary](https://github.com/derrod/legendary), the free and open-source Epic Games Launcher alternative.
 
 List all your titles for macOS or Windows
 
@@ -24,12 +28,25 @@ List all your titles for macOS or Windows
 legendary list --platform <Mac|Windows>
 ```
 
-Check for Unity games, for example by comparing with [steamdb](https://steamdb.info/tech/Engine/Unity/).
-
-If you found a Unity game, install the macOS or Windows version with
+Install the macOS or Windows version of game with
 
 ```
 legendary install --platform <Mac|Windows> <App name>
+```
+
+### Steam
+
+You can download Steam games for a specific platform with steamcmd. To download macOS versions, use the following command:
+
+```
+steamcmd +@sSteamCmdForcePlatformType macos
+```
+
+Inside steamcmd run the following:
+
+```
+login <account_name>
+app_update <app_id>
 ```
 
 ## Porting
@@ -37,7 +54,7 @@ legendary install --platform <Mac|Windows> <App name>
 Run the script with the path of the Unity game as argument
 
 ```
-./unify <game dir>
+./unify.sh <game dir>
 ```
 
 The script probes the game for the Unity version and OpenGL renderer, then downloads the relevant engine files and copies them into the game directory.
@@ -69,7 +86,7 @@ The script in its current state is very basic and does not cover all cases.
 | Totally Reliable Delivery Service | Hoatzin                          | 2018.4.14f1   | yes             | yes            | yes      | rewired: External.dll needs to be patched[^2] |
 | Faeria                            | Vulture                          | 2018.4.18f1   | yes             | yes            | no       | needs libepic_api.so[^1]; needs rewired       |
 | Iratus                            | 82ab0adb6e0b41bea531fcbb0c43cfc7 | 2018.4.26f1   | yes             | yes            | yes      | needs EOSSDK-Mac-Shipping[^1]                 |
-| Crying Suns                       | 18fafa2d70d64831ab500a9d65ba9ab8 | 2018.4.30f1   | no              | yes            | yes      | needs AkSoundEngine                           |
+| **Crying Suns**                   | 18fafa2d70d64831ab500a9d65ba9ab8 | 2018.4.30f1   | **no**          | yes            | **yes**  | needs AkSoundEngine                           |
 | Moonlighter                       | Eagle                            | 2019.2.20f1   | yes             | yes            | no       | needs InControlNative                         |
 | Kerbal Space Program              | a1e2ce30defe4a9187ebc14fc9d2bd8b | 2019.4.18f1   | yes             | yes            | yes      | mv GameData KSP.app/Contents/Resources/       |
 | Verdun                            | 38c0129b680e4843b4807b98bad67027 | 2019.4.29f1   | yes             | yes            | yes      | needs EOSSDK-Mac-Shipping[^1]; needs to be started with `./LinuxPlayer -epicusername=<something> -epicuserid=<something> -AUTH_PASSWORD=<something>`; rewired: Assembly-CSharp-firstpass.dll needs to be patched[^2]; no sound, needs fmod |
@@ -98,11 +115,11 @@ The script in its current state is very basic and does not cover all cases.
 | Void Bastards                     | 595e35287b824902a2f7107139603732 | 2017.4.21f1   | no              | no             | no       |                                               |
 | Car Mechanic Simulator 2018       | 8032b75cf0914afa87c78d6914adc165 | 2017.4.24f1   | no              | no             | no       |                                               |
 | PC Building Simulator             | ab277c0995e945d2b2c50c46883627f1 | 2018.4.16f1   | no              | yes            | no       |                                               |
-| Neon Abyss                        | a26f991a5e6c4e9c9572fc200cbea47f | 2018.4.21f1   | no              | yes            | yes      | needs fmod 2.0.8[^3]                          |
+| **Neon Abyss**                    | a26f991a5e6c4e9c9572fc200cbea47f | 2018.4.21f1   | **no**          | yes            | **yes**  | needs fmod 2.0.8[^3]                          |
 | Moving Out                        | 8e29583ae4b44a21883038668f7e301e | 2018.4.21f1   | no              | no             | no       |                                               |
 | Horizon Chase Turbo               | bb406082b69a47208489d3616b22b5c2 | 2018.4.27f1   | yes             | no             | no       |                                               |
 | Overcooked! 2                     | Potoo                            | 2018.4.32f1   | yes             | no             | no       |                                               |
-| Offworld Trading Company          | Snapper                          | 2018.4.36f1   | no              | yes            | yes      | needs libEOSSDK-Win32-Shipping.dll[^1]; needs to be started with `./Offworld -AUTH_LOGIN=<something> -AUTH_PASSWORD=<something>` |
+| **Offworld Trading Company**      | Snapper                          | 2018.4.36f1   | **no**          | yes            | **yes**  | needs libEOSSDK-Win32-Shipping.dll[^1]; needs to be started with `./Offworld -AUTH_LOGIN=<something> -AUTH_PASSWORD=<something>` |
 | Idle Champions                    | 40cb42e38c0b4a14a1bb133eb3291572 | 2019.3.0f6    | no              | no             | no       |                                               |
 | Tunche                            | fd51551d919847beb178985f6daf0306 | 2019.4.0f1    | no              | no             | no       |                                               |
 | Pine                              | 6d564ff21f9c45b7b782b7113ad60be8 | 2019.4.10f1   | yes             | no             | no       |                                               |
