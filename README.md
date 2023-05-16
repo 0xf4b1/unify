@@ -57,8 +57,8 @@ The script in its current state is very basic and does not cover all cases.
 | Duskers                           | 1e9c3a9a10c6463e9c065f371b8b42bf | 5.3.4f1       | yes             | yes            | yes      |                                               |
 | Sunless Sea                       | 2420b50453144c07b3b847fff941275d | 5.5.1f1       | yes             | yes            | no       | can not find matching unity engine            |
 | Darkwood                          | 923130ebb546417b9d3115507f752d34 | 5.5.3f1       | yes             | yes            | no       | can not find matching unity engine            |
-| Night In The Woods                | cd1b8a6e5b6c47369e2a1e2cf7b7f536 | 5.6.2p4       | yes             | yes            | no       | can not find matching unity engine            |
-| Stories Untold                    | Parsley                          | 5.6.3p2       | no              | yes            | no       | can not find matching unity engine            |
+| Night In The Woods                | cd1b8a6e5b6c47369e2a1e2cf7b7f536 | 5.6.2p4       | yes             | yes            | no       | can not find matching unity engine; 5.6.2xf1Linux can be used instead[^4]; needs fmod 1.7.8[^3] |
+| Stories Untold                    | Parsley                          | 5.6.3p2       | no              | yes            | no       | can not find matching unity engine; 5.6.3xf1Linux can be used instead[^4]; needs fmod 1.8.0[^3]; needs AVProVideo and more |
 | Inside                            | Marigold                         | 5.6.6f2       | no              | yes            | no       | can not find matching unity engine            |
 | The First Tree                    | cd98b47155654e1f9a9e84e60d0b49e4 | 2017.4.11f1   | yes             | yes            | yes      | rewired: Rewired_OSX_Lib.dll must be removed  |
 | Absolute Drift                    | 19927295d6e3467887d4e830d8c85963 | 2017.4.16f1   | yes             | yes            | no       | needs EOSSDK-Mac-Shipping[^1]; rewired: Assembly-CSharp.dll needs to be patched[^2]; starting but unplayable due to white screen |
@@ -67,7 +67,7 @@ The script in its current state is very basic and does not cover all cases.
 | Tacoma                            | Flagfin                          | 2018.4.9f1    | yes             | yes            | yes      | rewired: Rewired_OSX_Lib.dll must be removed  |
 | Rise of Industry                  | cf6c487e39a14113b75d1f625fed1da7 | 2018.4.11f1   | yes             | yes            | yes      | needs EOSSDK-Mac-Shipping[^1]                 |
 | Totally Reliable Delivery Service | Hoatzin                          | 2018.4.14f1   | yes             | yes            | yes      | rewired: External.dll needs to be patched[^2] |
-| Faeria                            | Vulture                          | 2018.4.18f1   | yes             | yes            | no       | needs libepic_api.so                          |
+| Faeria                            | Vulture                          | 2018.4.18f1   | yes             | yes            | no       | needs libepic_api.so[^1]; needs rewired       |
 | Iratus                            | 82ab0adb6e0b41bea531fcbb0c43cfc7 | 2018.4.26f1   | yes             | yes            | yes      | needs EOSSDK-Mac-Shipping[^1]                 |
 | Crying Suns                       | 18fafa2d70d64831ab500a9d65ba9ab8 | 2018.4.30f1   | no              | yes            | yes      | needs AkSoundEngine                           |
 | Moonlighter                       | Eagle                            | 2019.2.20f1   | yes             | yes            | no       | needs InControlNative                         |
@@ -98,7 +98,7 @@ The script in its current state is very basic and does not cover all cases.
 | Void Bastards                     | 595e35287b824902a2f7107139603732 | 2017.4.21f1   | no              | no             | no       |                                               |
 | Car Mechanic Simulator 2018       | 8032b75cf0914afa87c78d6914adc165 | 2017.4.24f1   | no              | no             | no       |                                               |
 | PC Building Simulator             | ab277c0995e945d2b2c50c46883627f1 | 2018.4.16f1   | no              | yes            | no       |                                               |
-| Neon Abyss                        | a26f991a5e6c4e9c9572fc200cbea47f | 2018.4.21f1   | no              | yes            | yes      | needs fmod 2.0.8                              |
+| Neon Abyss                        | a26f991a5e6c4e9c9572fc200cbea47f | 2018.4.21f1   | no              | yes            | yes      | needs fmod 2.0.8[^3]                          |
 | Moving Out                        | 8e29583ae4b44a21883038668f7e301e | 2018.4.21f1   | no              | no             | no       |                                               |
 | Horizon Chase Turbo               | bb406082b69a47208489d3616b22b5c2 | 2018.4.27f1   | yes             | no             | no       |                                               |
 | Overcooked! 2                     | Potoo                            | 2018.4.32f1   | yes             | no             | no       |                                               |
@@ -120,3 +120,5 @@ The script in its current state is very basic and does not cover all cases.
 
 [^1]: The file `libEOSSDK-Linux-Shipping.so` can be taken from the EOS-SDK and renamed to replace the missing library.
 [^2]: The file can be patched to use `Rewired_Linux.dll` instead of `Rewired_OSX.dll` with [dnSpy](https://github.com/dnSpy/dnSpy). `Rewired_Linux.dll` can be taken from the macOS version of Totally Reliable Delivery Service.
+[^3]: FMOD Engine can be downloaded for free after registering from [here](https://www.fmod.com/download).
+[^4]: Older Unity builds for Linux can be found in the forum [here](https://forum.unity.com/threads/unity-on-linux-release-notes-and-known-issues.350256/). The `LinuxPlayer` executable can be binary patched to match the expected version.
