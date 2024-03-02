@@ -62,6 +62,8 @@ If it succeeded, try to start the game via the `LinuxPlayer` binary.
 If it does not run, make sure to check the logs usually in `~/.config/unity3d/<vendor>/<title>`.
 In most cases, the game misses some native libraries that need to be replaced.
 
+The script will cache the downloaded and extracted unity files by default in the folder `~/Unity/Hub/Editor`, but you can override this location using the `UNITY_REPO` environment variable.
+
 If the script is not successful, the game may not be a Unity game or it may have a different structure.
 The script in its current state is very basic and does not cover all cases.
 
