@@ -51,7 +51,8 @@ app_update <app_id>
 
 ## Porting
 
-Run the script with the path of the Unity game as argument
+If the game has a `_Data` directory prefixed with the game title (e.g. `The Last Campfire_Data`), you should rename it to just `Data`.
+Then run the script with the path of the Unity game as argument
 
 ```
 ./unify.sh <game dir>
@@ -61,6 +62,7 @@ The script probes the game for the Unity version and OpenGL renderer, then downl
 If it succeeded, try to start the game via the `LinuxPlayer` binary.
 If it does not run, make sure to check the logs usually in `~/.config/unity3d/<vendor>/<title>`.
 In most cases, the game misses some native libraries that need to be replaced.
+For Steam games it might work to just copy an arbitrary `.so` file to the place of the expected `libsteam_api64.so`.
 
 The script will cache the downloaded and extracted unity files by default in the folder `~/Unity/Hub/Editor`, but you can override this location using the `UNITY_REPO` environment variable.
 
@@ -136,6 +138,7 @@ The script in its current state is very basic and does not cover all cases.
 | Shop Titans                       | 329064225aaf4df29c4658f141173905 | 2021.3.10f1   | no              | no             | no       |                                               |
 | Bloons TD 6                       | 7786b355a13b47a6b3915335117cd0b2 | 2021.3.16f1   | no              | no             | no       |                                               |
 | Against All Odds                  | ad8aff099d2a445599f9797a24e9ff93 | 2021.3.19f1   | no              | no             | no       |                                               |
+| **The Last Campfire**             | 990630                           | 2018.4.24f1   | **no**          | yes            | **yes**  | Needs an arbitrary `.so` file named as `Data/Mono/x86_64/libsteam_api64.so`. Controller input doesn't work (may require patching the Rewired library) |
 
 [^1]: The file `libEOSSDK-Linux-Shipping.so` can be taken from the EOS-SDK and renamed to replace the missing library.
 [^2]: The file can be patched to use `Rewired_Linux.dll` instead of `Rewired_OSX.dll` with [dnSpy](https://github.com/dnSpy/dnSpy). `Rewired_Linux.dll` can be taken from the macOS version of Totally Reliable Delivery Service.
