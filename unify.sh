@@ -1,7 +1,7 @@
 #!/bin/bash
 
 UNITY_REPO="${UNITY_REPO:-"$HOME/Unity/Hub/Editor"}"
-UNITY_VARIANT="${UNITY_VARIANT:-linux64_withgfx_nondevelopment_mono}"
+UNITY_VARIANTS=(${UNITY_VARIANTS:-linux64_player_nondevelopment_mono linux64_withgfx_nondevelopment_mono})
 UNITY_ENGINE_PREFIX="${UNITY_ENGINE_PREFIX:-Editor/Data/PlaybackEngines/LinuxStandaloneSupport/Variations}"
 
 die() {
@@ -25,25 +25,41 @@ strings "$DATA_DIR/Resources/unity_builtin_extra" | grep gl_ >/dev/null || die 2
 
 # Check Unity Engine
 UNITY_PATH="$UNITY_REPO/$version"
-if [ ! -d "$UNITY_PATH/$UNITY_ENGINE_PREFIX/$UNITY_VARIANT" ]; then
-  if [ ! -f "$UNITY_PATH/Unity.tar.xz" ]; then
-    echo "Unity version not found locally"
-    if [ ! -f "$UNITY_REPO/archive" ]; then
-        echo "Fetching Unity archive ..."
-        mkdir -p "$UNITY_REPO"
-        curl https://unity.com/releases/editor/archive -o "$UNITY_REPO/archive" || die 3 Could not fetch Unity archive
-    fi
-    res=`cat $UNITY_REPO/archive | grep unityhub://$version`
-    [ -z "$res" ] && die 4 Unity version not found in archive
-    HASH=${res##*$version/}
-    HASH=${HASH%%\"*}
-    mkdir "$UNITY_REPO/$version"
-    curl "https://download.unity3d.com/download_unity/$HASH/LinuxEditorInstaller/Unity.tar.xz" -o "$UNITY_PATH/Unity.tar.xz" || die 5 Could not fetch Unity engine archive
-  fi
-  echo "Extracting $UNITY_VARIANT from Unity.tar.xz"
-  tar -xf "$UNITY_PATH/Unity.tar.xz" -C "$UNITY_PATH" "$UNITY_ENGINE_PREFIX/$UNITY_VARIANT"
+if [ ! -f "$UNITY_PATH/Unity.tar.xz" ]; then
+	echo "Unity version not found locally"
+	if [ ! -f "$UNITY_REPO/archive" ]; then
+		echo "Fetching Unity archive ..."
+		mkdir -p "$UNITY_REPO"
+		curl https://unity.com/releases/editor/archive -o "$UNITY_REPO/archive" || die 3 Could not fetch Unity archive
+	fi
+	res=`cat $UNITY_REPO/archive | grep unityhub://$version`
+	[ -z "$res" ] && die 4 Unity version not found in archive
+	HASH=${res##*$version/}
+	HASH=${HASH%%\"*}
+	mkdir "$UNITY_REPO/$version"
+	curl "https://download.unity3d.com/download_unity/$HASH/LinuxEditorInstaller/Unity.tar.xz" -o "$UNITY_PATH/Unity.tar.xz" || die 5 Could not fetch Unity engine archive
 fi
+EXTRACT=true
+for UNITY_VARIANT in "${UNITY_VARIANTS[@]}"
+do
+	if [ -d "$UNITY_PATH/$UNITY_ENGINE_PREFIX/$UNITY_VARIANT" ]; then
+		EXTRACT=false
+		break
+	fi
+done
+if [ "$EXTRACT" = true ]; then
+	echo "Extracting ${UNITY_VARIANTS[@]} from Unity.tar.xz"
+	# Ignoring error messages, as only one variant is probably in the archive
+	tar -xf "$UNITY_PATH/Unity.tar.xz" -C "$UNITY_PATH" "${UNITY_VARIANTS[@]/#/$UNITY_ENGINE_PREFIX/}" > /dev/null 2>&1
+fi
+for UNITY_VARIANT in "${UNITY_VARIANTS[@]}"
+do
+	if [ -d "$UNITY_PATH/$UNITY_ENGINE_PREFIX/$UNITY_VARIANT" ]; then
+		cp -r "$UNITY_PATH/$UNITY_ENGINE_PREFIX/$UNITY_VARIANT"/* "$DATA_DIR/../" || die 6 Could not copy Unity Engine files
 
-cp -r "$UNITY_PATH/$UNITY_ENGINE_PREFIX/$UNITY_VARIANT"/* "$DATA_DIR/../" || die 6 Could not copy Unity Engine files
+		echo "Unity engine files copied."
+		exit 0
+	fi
+done
 
-echo "Unity engine files copied."
+die 7 None of the UNITY_VARIANTS found in the Unity engine archive
