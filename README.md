@@ -100,6 +100,7 @@ The script in its current state is very basic and does not cover all cases.
 | Terraforming Mars                 | 582c8940f499450d9033840efe5937a6 | 2021.3.12f1   | no              | no             | no       |                                               |
 | while True: learn()               | 4f272a49a39742b795d63e1f483a7c7d | 2021.3.14f1   | yes             | no             | no       |                                               |
 | The Long Dark                     | ed93b18355a84230938c705121c63661 | 2021.3.16f1   | yes             | yes            | no       |                                               |
+| **Stacklands**                    | (itch.io release)                | 2022.3.4f1    | **no**          | yes            | **yes**  |                                               |
 
 ### Windows
 
