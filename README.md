@@ -101,6 +101,7 @@ The script in its current state is very basic and does not cover all cases.
 | while True: learn()               | 4f272a49a39742b795d63e1f483a7c7d | 2021.3.14f1   | yes             | no             | no       |                                               |
 | The Long Dark                     | ed93b18355a84230938c705121c63661 | 2021.3.16f1   | yes             | yes            | no       |                                               |
 | **Stacklands**                    | (itch.io release)                | 2022.3.4f1    | **no**          | yes            | **yes**  |                                               |
+| Pokémon Trading Card Game Live    | pokemon                          | 2022.3.21f1   | no              | no             | no       |                                               |
 
 ### Windows
 
@@ -140,6 +141,7 @@ The script in its current state is very basic and does not cover all cases.
 | Bloons TD 6                       | 7786b355a13b47a6b3915335117cd0b2 | 2021.3.16f1   | no              | no             | no       |                                               |
 | Against All Odds                  | ad8aff099d2a445599f9797a24e9ff93 | 2021.3.19f1   | no              | no             | no       |                                               |
 | **The Last Campfire**             | 990630                           | 2018.4.24f1   | **no**          | yes            | **yes**  | Needs an arbitrary `.so` file named as `Data/Mono/x86_64/libsteam_api64.so`. Controller input doesn't work (may require patching the Rewired library) |
+| Pokémon Trading Card Game Live    | pokemon                          | 2022.3.21f1   | no              | no             | no       |                                               |
 
 [^1]: The file `libEOSSDK-Linux-Shipping.so` can be taken from the EOS-SDK and renamed to replace the missing library.
 [^2]: The file can be patched to use `Rewired_Linux.dll` instead of `Rewired_OSX.dll` with [dnSpy](https://github.com/dnSpy/dnSpy). `Rewired_Linux.dll` can be taken from the macOS version of Totally Reliable Delivery Service.
