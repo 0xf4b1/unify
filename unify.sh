@@ -19,9 +19,7 @@ res=`find "$1" -name level0`
 version=`strings "$res" | head -n 1`
 echo "Found Unity version: $version"
 
-# Probe for opengl renderer
 DATA_DIR=`dirname "$res"`
-strings "$DATA_DIR/Resources/unity_builtin_extra" | grep gl_ >/dev/null || die 2 OpenGL renderer not enabled ':('
 
 # Check Unity Engine
 UNITY_PATH="$UNITY_REPO/$version"
