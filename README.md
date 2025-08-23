@@ -5,14 +5,14 @@ Games based on the Unity engine can be deployed and run on multiple platforms, i
 The platform-specific engine files are mostly generic, so we take the official game files and run them with Unity's Linux binaries.
 This way we get a native Linux version of the game without the need of compatibility layers, such as Wine.
 
-This method can work as long as the game was exported with OpenGL renderer enabled.
-Windows versions usually default to DirectX and only rarely have OpenGL enabled, but macOS versions mostly have OpenGL enabled and chances are high to get them to run.
+This method can work as long as the game was exported with OpenGL or Vulkan renderer enabled.
+Windows versions usually default to DirectX and only rarely have OpenGL enabled, but macOS versions often have OpenGL enabled and chances are high to get them to run.
 
 Many Unity titles are officially available for Linux, but there are also some cases where this method can create a missing Linux port.
-I have tested all the Unity games from Epic Games that I collected for free.
+Lots of Unity Games that were availbale for free on Epic Games have been tested.
 Since Epic Games does not support Linux game versions, you can also benefit from this method to play your Unity games that you may have collected on that platform.
 
-Take the compatibility status list as reference if you are only interested in games that are known to be playable.
+Take the [Compatibility Status](https://github.com/0xf4b1/unify#compatibility-status) list as reference if you are only interested in games that are known to be playable.
 
 ## Install Unity Games
 
@@ -51,6 +51,22 @@ app_update <app_id>
 
 ## Porting
 
+Install requirements via pip:
+
+```
+pip install -r requirements.txt
+```
+
+Check available renderers of the game by using the script:
+
+```
+./renderers.py <game dir>
+```
+
+If the script outputs OpenGL Core or Vulkan as detected Graphics Apis, you are lucky and can continue!
+Otherwise you should stop here because the game does not contain shaders that work with Unity on Linux.
+If you still want to proceed, read through the [Research section](https://github.com/0xf4b1/unify#research) to see possible experimental ways to get the needed shaders or let me know if you have an idea!
+
 If the game has a `_Data` directory prefixed with the game title (e.g. `The Last Campfire_Data`), you should rename it to just `Data`.
 Then run the script with the path of the Unity game as argument
 
@@ -58,7 +74,7 @@ Then run the script with the path of the Unity game as argument
 ./unify.sh <game dir>
 ```
 
-The script probes the game for the Unity version and OpenGL renderer, then downloads the relevant engine files and copies them into the game directory.
+The script probes the game for the Unity version, then downloads the relevant engine files and copies them into the game directory.
 If it succeeded, try to start the game via the `LinuxPlayer` binary.
 If it does not run, make sure to check the logs usually in `~/.config/unity3d/<vendor>/<title>`.
 In most cases, the game misses some native libraries that need to be replaced.
@@ -68,6 +84,80 @@ The script will cache the downloaded and extracted unity files by default in the
 
 If the script is not successful, the game may not be a Unity game or it may have a different structure.
 The script in its current state is very basic and does not cover all cases.
+
+## Research
+
+### Shader object extraction
+
+Dump shader objects from games and use them in other games.
+
+If a game needs the exact same shaders that are present in another game with the desired graphics api and same unity version, there is a chance that you can reuse the whole shader objects.
+
+#### Shader object dumping
+Dump shader objects from a game that supports the desired graphics api:
+```
+./shaders.py <game dir> --dump --shader_dir <shader_dump_dir>
+```
+
+#### Shader object replacing
+Replace the shader objects in a game with previously dumped ones:
+```
+./shaders.py <game dir> --replace --shader_dir <shader_dump_dir>
+```
+
+Force the game to use a different graphics api by patching file `globalgamemanagers`, e.g. 17 for OpenGL Core:
+```
+./renderers.py <game dir> --force 17
+```
+
+### Shader compilation
+
+#### Compile missing shader objects with Unity directly
+
+Buildin-shader source code can be downloaded from the unity archive per unity release, for example [builtin_shaders-6000.2.1f1.zip](https://download.unity3d.com/download_unity/55300504c302/builtin_shaders-6000.2.1f1.zip).
+Other shader source code provided via packages should possibly be located on the filesystem after installing.
+By creating and exporting a Unity project that contains the shader objects with the desired graphics api, they can be extracted as described above.
+
+#### Compile shader code by using UnityShaderCompiler directly
+
+The Unity Editor comes with a dedicated UnityShaderCompiler executable. The Unity Editor opens a port and starts instances of the UnityShaderCompiler with parameters to connect to Unity's open port.
+The communication can be intercepted by setting up a proxy, like described [here](https://discussions.unity.com/t/how-can-i-use-unityshadercompiler-exe/167609).
+As proxy tool, [tcpprox](https://github.com/staaldraad/tcpprox) can be used for example.
+The communication is a proprietary protocol that needs to be analyzed. One of the supported commands is `c:compileSnippet` that Unity sends followed by plain shader source code to receive compiled shaders and other information back.
+
+### Shader translation via cross-compiling
+
+For games that come only with DirectX and no way to get the shader sources, try to translate DXBC to OpenGL or Vulkan shaders.
+
+#### Translate DirectX byte-code (DXBC) to OpenGL
+
+[HLSLcc](https://github.com/Unity-Technologies/HLSLcc): https://github.com/0xf4b1/unify/issues/11 HLSLcc is part of Unity's shader compiler, see [docs](https://docs.unity3d.com/6000.1/Documentation/Manual/shader-compilation.html).
+
+In the hlslcc branch is an attempt to use the library to translate DXBC to OpenGL. The translation works for the test DXBC object, however it crashes on dumped DXBC objects from unity for yet unknown reasons.
+
+#### Translate DirectX byte-code (DXBC) to SPIR-V (Vulkan)
+
+- [DXVK](https://github.com/doitsujin/dxvk): DXVK reimplements the DirectX api calls to target Vulkan.
+This means it must also handle shader translation from DirectX (DXBC) -> Vulkan (SPIR-V).
+The needed functionality for the translation should start [here](https://github.com/doitsujin/dxvk/blob/master/src/d3d11/d3d11_shader.cpp#L17C1-L59C6).
+
+- [DirectXShaderCompiler](https://github.com/microsoft/DirectXShaderCompiler): For compiling shader source code and possibly DXBC to SPIR-V using the SPIR-V CodeGen.
+
+### Unity shader object rewriting
+
+Rewrite Unity shader objects with new shader code.
+
+Even if there is a way to directly translate shader byte-code to another graphics api, only replacing the shader code does not work as Unity's shader object contains much for information which means all this required information that Unity writes into the object need to be determined to be able to rewrite the whole unity shader object so that the shader can run.
+
+### More compatibility
+
+- Support for macOS (OpenGL is supported on macOS): https://github.com/0xf4b1/unify/issues/4
+- Research if Android is possible (OpenGLES is supported on Windows): https://github.com/0xf4b1/unify/issues/7
+
+### Useful tools
+- [AssetRipper](https://github.com/AssetRipper/AssetRipper)
+- [UABE](https://github.com/SeriousCache/UABE)
+- [UnityPy](https://github.com/K0lb3/UnityPy)
 
 ## Compatibility Status
 
