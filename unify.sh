@@ -25,17 +25,16 @@ DATA_DIR=`dirname "$res"`
 UNITY_PATH="$UNITY_REPO/$version"
 if [ ! -f "$UNITY_PATH/Unity.tar.xz" ]; then
 	echo "Unity version not found locally"
-	if [ ! -f "$UNITY_REPO/archive" ]; then
-		echo "Fetching Unity archive ..."
-		mkdir -p "$UNITY_REPO"
-		curl https://unity.com/releases/editor/archive -o "$UNITY_REPO/archive" || die 3 Could not fetch Unity archive
-	fi
-	res=`cat $UNITY_REPO/archive | grep unityhub://$version`
-	[ -z "$res" ] && die 4 Unity version not found in archive
-	HASH=${res##*$version/}
-	HASH=${HASH%%\"*}
+	echo "Fetching Unity archive ..."
+	mkdir -p "$UNITY_REPO"
+	curl --silent -X POST -H "Content-Type: application/json" -d '{"operationName":"GetRelease","variables":{"version":"'$version'","limit":300},"query":"query GetRelease($limit: Int, $skip: Int, $version: String!, $stream: [UnityReleaseStream!]) {\n getUnityReleases(\nlimit: $limit\nskip: $skip\nstream: $stream\nversion: $version\nentitlements: [XLTS]\n ) {\ntotalCount\nedges {\n node {\n version\n entitlements\n releaseDate\n unityHubDeepLink\n stream\n __typename\n }\n __typename\n}\n__typename\n }\n}"}' \
+	https://services.unity.com/graphql -o archive || die 3 Could not fetch Unity archive
+	HASH=`grep -oE "unityhub://$version/\w+" archive` || die 4 Unity version not found in archive
+	HASH=`echo $HASH | cut -d/ -f4`
+	URL="https://download.unity3d.com/download_unity/$HASH/LinuxEditorInstaller/Unity.tar.xz"
 	mkdir "$UNITY_REPO/$version"
-	curl "https://download.unity3d.com/download_unity/$HASH/LinuxEditorInstaller/Unity.tar.xz" -o "$UNITY_PATH/Unity.tar.xz" || die 5 Could not fetch Unity engine archive
+	echo "Downloading Unity from $URL ..."
+	curl $URL -o "$UNITY_PATH/Unity.tar.xz" || die 5 Could not fetch Unity engine archive
 fi
 EXTRACT=true
 for UNITY_VARIANT in "${UNITY_VARIANTS[@]}"
