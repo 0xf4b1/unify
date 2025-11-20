@@ -2,7 +2,7 @@
 
 UNITY_REPO="${UNITY_REPO:-"$HOME/Unity/Hub/Editor"}"
 UNITY_VARIANTS=(${UNITY_VARIANTS:-linux64_player_nondevelopment_mono linux64_withgfx_nondevelopment_mono})
-UNITY_ENGINE_PREFIX="${UNITY_ENGINE_PREFIX:-Editor/Data/PlaybackEngines/LinuxStandaloneSupport/Variations}"
+UNITY_ENGINE_PREFIX="${UNITY_ENGINE_PREFIX:-./Variations}"
 
 die() {
 	CODE=$1
@@ -31,10 +31,13 @@ if [ ! -f "$UNITY_PATH/Unity.tar.xz" ]; then
 	https://services.unity.com/graphql -o archive || die 3 Could not fetch Unity archive
 	HASH=`grep -oE "unityhub://$version/\w+" archive` || die 4 Unity version not found in archive
 	HASH=`echo $HASH | cut -d/ -f4`
-	URL="https://download.unity3d.com/download_unity/$HASH/LinuxEditorInstaller/Unity.tar.xz"
+	# TODO support Mono/IL2CPP variants, e.g.
+	# https://download.unity3d.com/download_unity/abdb44fca7f7/MacEditorTargetInstaller/UnitySetup-Linux-Mono-Support-for-Editor-6000.2.13f1.pkg
+	# https://download.unity3d.com/download_unity/abdb44fca7f7/MacEditorTargetInstaller/UnitySetup-Linux-IL2CPP-Support-for-Editor-6000.2.13f1.pkg
+	URL="https://download.unity3d.com/download_unity/$HASH/MacEditorTargetInstaller/UnitySetup-Linux-Support-for-Editor-$version.pkg"
 	mkdir "$UNITY_REPO/$version"
 	echo "Downloading Unity from $URL ..."
-	curl $URL -o "$UNITY_PATH/Unity.tar.xz" || die 5 Could not fetch Unity engine archive
+	curl $URL -o "$UNITY_PATH/Unity.pkg" || die 5 Could not fetch Unity engine archive
 fi
 EXTRACT=true
 for UNITY_VARIANT in "${UNITY_VARIANTS[@]}"
@@ -45,9 +48,10 @@ do
 	fi
 done
 if [ "$EXTRACT" = true ]; then
-	echo "Extracting ${UNITY_VARIANTS[@]} from Unity.tar.xz"
+	echo "Extracting ${UNITY_VARIANTS[@]} from Unity.pkg"
 	# Ignoring error messages, as only one variant is probably in the archive
-	tar -xf "$UNITY_PATH/Unity.tar.xz" -C "$UNITY_PATH" "${UNITY_VARIANTS[@]/#/$UNITY_ENGINE_PREFIX/}" > /dev/null 2>&1
+	7z x -o"$UNITY_PATH" "$UNITY_PATH/Unity.pkg"
+	7z x -o"$UNITY_PATH" "$UNITY_PATH/Payload~" "${UNITY_VARIANTS[@]/#/$UNITY_ENGINE_PREFIX/}"
 fi
 for UNITY_VARIANT in "${UNITY_VARIANTS[@]}"
 do
