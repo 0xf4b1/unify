@@ -225,6 +225,7 @@ Even if there is a way to directly translate shader byte-code to another graphic
 | Among Us                          | 963137e4c29d4c79a81323b8fab03a40 | 2020.3.22f1   | no              | no             | no       |                                               |
 | City of Gangsters                 | 002b00085aeb49b1a3f3c42e3f918f2f | 2020.3.28f1   | no              | no             | no       |                                               |
 | Gloomhaven                        | 1bcd791d54684eb29ed32ad1c0593d12 | 2020.3.33f1   | no              | no             | no       |                                               |
+| Raldi's Crackhouse                | 769103                           | 2020.3.49f1   | no              | no             | no       | candidate for shader replacement?             |
 | Stranded Deep                     | 02107cba432c4551a027d25d597adc49 | 2021.2.7f1    | yes             | yes            | no       | needs libBCrypt.so                            |
 | Epistory - Typing Chronicles      | 4ec72fd8cbd94aa4acc61624c68fbc4f | 2021.3.3f1    | yes             | no             | no       |                                               |
 | Shop Titans                       | 329064225aaf4df29c4658f141173905 | 2021.3.10f1   | no              | no             | no       |                                               |
