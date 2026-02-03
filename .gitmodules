@@ -1,0 +1,3 @@
+[submodule "hlslcc/HLSLcc"]
+	path = hlslcc/HLSLcc
+	url = https://github.com/Unity-Technologies/HLSLcc
